@@ -27,6 +27,47 @@ _API.cd = function(directory)
     end
 end
 
+local function is_abspath(path)
+    if(path:match('()/') == 1) then return true end
+    if(path:match('()%a:/') == 1) then return true end
+end
+
+local function is_relpath(path)
+    return not is_abspath(path)
+end
+
+local function is_rootpath(path)
+    if(path:match('()/$') == 1) then return true end
+    if(path:match('()%a:/$') == 1) then return true end
+end
+
+local function path_parse(path)
+    -- 对输入的路径进行解析，将其变成最简的路径，即去除'.'，'..'
+    local part = {}
+    local last_idx = 1
+    for idx in string.gmatch(path, "()/") do
+        print(last_idx,idx)
+        table.insert(part,path:sub(last_idx,idx-1))
+        last_idx = idx + 1
+    end
+    table.insert(part,path:sub(last_idx,#path))
+    for i,v in ipairs(part) do
+        print(i,v)
+    end
+end
+
+path_parse("C:/shsh/saf/")
+
+local function fix_path(path)
+    if(is_abspath(path)) then
+        return path
+    else
+        local currentdir = _API.pwd()
+        --想办法获取到完整路径（目录树）
+        return currentdir .. '/' .. path
+    end
+end
+
 local FILECLS = { path = '' }
 
 function FILECLS:path_exists()
@@ -67,30 +108,6 @@ end
 
 function FILECLS:list_files()
     
-end
-
-local function is_abspath(path)
-    if(path:match('()/') == 1) then return true end
-    if(path:match('()%a:') == 1) then return true end
-end
-
-local function is_relpath(path)
-    return not is_abspath(path)
-end
-
-local function is_rootpath(path)
-    if(path:match('()/$') == 1) then return true end
-    if(path:match('()%a:/$') == 1) then return true end
-end
-
-local function fix_path(path)
-    if(is_abspath(path)) then
-        return path
-    else
-        local currentdir = _API.pwd()
-        --想办法获取到完整路径（目录树）
-        return currentdir .. '/' .. path
-    end
 end
 
 _API.new = function(path)
