@@ -82,21 +82,36 @@ function FILECLS:get_path()
     return self.path
 end
 
-local funct = function()
-    return 2
-end
-
 function FILECLS:get_directory()
-    local parent_dir = self.path:gmatch('.+/')
-    return _API.new(parent_dir())
+    local parent_dir = self.path:match('.+/')
+    return _API.new(parent_dir)
 end
 
-function FILECLS:get_file_name()
-    
+function FILECLS:get_file_name(without_ext)
+    local parent_dir = self.path:match('.+/')
+    local file_name = self.path:sub(#parent_dir+1)
+    if(without_ext) then 
+        local tmp = file_name:match('.+%.')
+        if(tmp ~= nil) then
+            tmp = tmp:sub(1,#tmp-1)
+            file_name = tmp
+        end
+    end
+    return file_name
 end
 
-function FILECLS:get_file_ext()
-    
+function FILECLS:get_file_ext(without_dot)
+    local file_name = self:get_file_name()
+    local idx = file_name:match('.*()%.')
+    local ext = ''
+    if(idx ~= nil) then
+        if(without_dot) then
+            ext = file_name:sub(idx+1)
+        else
+            ext = file_name:sub(idx)
+        end
+    end
+    return ext
 end
 
 function FILECLS:list_files()
@@ -135,6 +150,8 @@ _API.cd = function(directory)
     end
 end
 
-local file = _API.new('C:/path/kksk/asaj/assfasg/空手道/asfasf/')
+local file = _API.new('C:/path/kksk/asaj/assfasg/空手道/asfasf/asda.jpg')
 print(file:get_directory():get_path())
+print(file:get_file_name(true))
+print(file:get_file_ext(true))
 return _API
