@@ -8,15 +8,6 @@ local function is_abspath(path)
     if(path:match('()%a:/') == 1) then return true end
 end
 
-local function is_relpath(path)
-    return not is_abspath(path)
-end
-
-local function is_rootpath(path)
-    if(path:match('()/$') == 1) then return true end
-    if(path:match('()%a:/$') == 1) then return true end
-end
-
 local function path_parse(path)
     -- 对输入的路径进行解析，将其变成最简的路径，即去除'.'，'..'
     if(path:sub(#path) ~= '/') then path = path .. '/' end
@@ -121,9 +112,9 @@ function FILECLS:list_files()
                 goto continue
             end
             local file = _API.new(self:get_path() .. '/' .. file_name)
-			table.insert(list,file)
+            table.insert(list,file)
             ::continue::
-		end
+        end
     end
     return list
 end
@@ -164,8 +155,4 @@ _API.cd = function(directory)
     end
 end
 
-local file = _API.new('C:/path/kksk/asaj/assfasg/空手道/asfasf/asda.jpg.jpg.jpg')
-print(file:get_directory():get_path())
-print(file:get_file_name(true))
-print(file:get_file_ext(true))
 return _API
