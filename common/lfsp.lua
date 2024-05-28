@@ -129,9 +129,14 @@ end
 _API.mkdir = function(directory)
     local dir = _API.new(directory)
     if(not dir:path_exists()) then
+        _API.mkdir(dir:get_directory():get_path())
         lfs.mkdir(dir:get_path())
     else
-        print('"' .. directory .. '"' .. ' 无法创建')
+        if(dir:is_directory()) then
+            --print('"' .. directory .. '"' .. ' 已存在！')
+        else
+            print('"' .. directory .. '"' .. ' 无法创建！')
+        end
     end
 end
 
