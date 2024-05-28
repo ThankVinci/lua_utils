@@ -22,7 +22,7 @@ local function path_parse(path)
     if(path:sub(#path) ~= '/') then path = path .. '/' end
     local parts = {}
     local last_idx = 1
-    for idx in string.gmatch(path, "()/") do
+    for idx in path:gmatch("()/") do
         local part = path:sub(last_idx,idx-1)
         if(part == '.' or part == '') then goto continue end
         if(part == '..') then
@@ -83,15 +83,15 @@ function FILECLS:get_path()
 end
 
 function FILECLS:get_directory()
-    local parent_dir = self.path:match('.+/')
+    local parent_dir = self.path:match('.*/')
     return _API.new(parent_dir)
 end
 
 function FILECLS:get_file_name(without_ext)
-    local parent_dir = self.path:match('.+/')
-    local file_name = self.path:sub(#parent_dir+1)
+    local idx = self.path:match('.*()/')
+    local file_name = self.path:sub(idx+1)
     if(without_ext) then 
-        local tmp = file_name:match('.+%.')
+        local tmp = file_name:match('.*%.')
         if(tmp ~= nil) then
             tmp = tmp:sub(1,#tmp-1)
             file_name = tmp
@@ -150,7 +150,7 @@ _API.cd = function(directory)
     end
 end
 
-local file = _API.new('C:/path/kksk/asaj/assfasg/空手道/asfasf/asda.jpg')
+local file = _API.new('C:/path/kksk/asaj/assfasg/空手道/asfasf/asda.jpg.jpg.jpg')
 print(file:get_directory():get_path())
 print(file:get_file_name(true))
 print(file:get_file_ext(true))
