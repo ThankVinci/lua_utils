@@ -1,3 +1,11 @@
+--[[
+使用须知：
+1. 本模块对外提供了四个接口；cd、pwd、mkdir与new，其中规范化文件路径的分隔符，使用'/'作为路径分隔符
+2. 本模块实现了一个文件类型，可通过模块的new接口创建出文件对象，文件对象的路径会被修正为完整的绝对路径
+3. cd、pwd、mkdir以及文件对象能够判断路径是否存在、是否是目录/文件和列出子文件的功能，均是在lfs库原有的基础之上进行的封装
+4. 文件对象创建暂时没有对路径字符串进行校验、无法防止一些不该存在的字符出现在路径中，但一般的使用已经足够了
+5. 在Windows系统下为了能够正常支持UTF8字符，应该加载efw，此处直接使用efw_support不区分平台，其他平台不会导入efw
+--]]
 require 'efw_support'
 local lfs = require 'lfs'
 
@@ -36,6 +44,7 @@ local function path_parse(path)
 end
 
 local function fix_path(path)
+    path = path:gsub('\\','/')
     if(is_abspath(path)) then
         if(path:sub(#path) == '/') then 
             path = path:sub(1,#path-1)
