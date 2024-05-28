@@ -43,20 +43,33 @@ end
 
 local function path_parse(path)
     -- 对输入的路径进行解析，将其变成最简的路径，即去除'.'，'..'
-    local part = {}
+    if(path[#path] ~= '/') then path = path .. '/' end
+    local parts = {}
     local last_idx = 1
     for idx in string.gmatch(path, "()/") do
-        print(last_idx,idx)
-        table.insert(part,path:sub(last_idx,idx-1))
+        local part = path:sub(last_idx,idx-1)
+        if(part == '.' or part == '') then goto continue end
+        if(part == '..') then
+            table.remove(parts)
+            goto continue
+        end
+        table.insert(parts,part)
+        ::continue::
         last_idx = idx + 1
     end
-    table.insert(part,path:sub(last_idx,#path))
-    for i,v in ipairs(part) do
-        print(i,v)
+    path = parts[1]
+    for i,v in ipairs(parts) do
+        if(i == 1) then goto continue end
+        path = path .. '/' .. parts[i]
+        ::continue::
     end
+    if(#parts == 1) then path = path .. '/' end
+    if(#parts == 0) then path = '' end
+    return path
 end
-
-path_parse("C:/shsh/saf/")
+local path = "C:/1/2/3/4/./../123/../../../../..//."
+path = path_parse(path)
+print(path)
 
 local function fix_path(path)
     if(is_abspath(path)) then
