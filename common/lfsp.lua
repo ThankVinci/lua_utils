@@ -49,11 +49,10 @@ local function fix_path(path)
         if(path:sub(#path) == '/') then 
             path = path:sub(1,#path-1)
         end
-        return path
     else
-        local currentdir = _API.pwd()
-        return path_parse(currentdir .. '/' .. path)
+        path = _API.pwd() .. '/' .. path
     end
+    return path_parse(path)
 end
 
 local FILECLS = { path = '' }
@@ -115,7 +114,18 @@ function FILECLS:get_file_ext(without_dot)
 end
 
 function FILECLS:list_files()
-    
+    local list = {}
+    if(self:is_directory()) then
+        for file_name in lfs.dir(self:get_path()) do
+            if(file_name == '.' or file_name == '..') then
+                goto continue
+            end
+            local file = _API.new(self:get_path() .. '/' .. file_name)
+			table.insert(list,file)
+            ::continue::
+		end
+    end
+    return list
 end
 
 _API.new = function(path)
@@ -124,7 +134,6 @@ _API.new = function(path)
     file.path = fix_path(path)
     return file
 end
-
 
 _API.mkdir = function(directory)
     local dir = _API.new(directory)
