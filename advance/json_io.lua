@@ -34,6 +34,10 @@ local function write_to_file(tbl,path)
     local result,str = write_to_string(tbl)
     if(result == true) then 
         local file = lfsp.new(path)
+        local root_dir = file:get_root()
+        if(not root_dir:is_directory()) then 
+            return false,'"' .. file:get_path() .. '" 文件无法写入！'
+        end
         local directory = file:get_directory()
         lfsp.mkdir(directory:get_path())
         if(directory:is_directory()) then
@@ -52,6 +56,6 @@ _API.read_from_string = read_from_string
 _API.read_from_file = read_from_file
 
 local result,data = read_from_file('data2.json')
-print(#data)
---print(write_to_file({1,2,3,4,5},'data3.json'))
+print(data)
+print(write_to_file({1,2,3,4,5},'G:/data3.json'))
 return _API
