@@ -6,14 +6,10 @@ local _API = { _VERSION = '1.0' }
 
 local json_codec = cjson.new()
 
-local function check_json_str(str)
-    local success,result = pcall(json_codec.decode,str)
-    return success and result ~= nil
-end
-
 local function read_from_string(str)
-    if(not check_json_str(str)) then return false,'json 格式无效！' end
-    return true,json_codec.decode(str)
+    local success,result = pcall(json_codec.decode,str)
+    if(not success) then return false,'json 格式无效！' end
+    return true,result
 end
 
 local function read_from_file(path)
@@ -57,5 +53,5 @@ _API.read_from_file = read_from_file
 
 local result,data = read_from_file('data2.json')
 print(#data)
-print(write_to_file({1,2,3,4,5},'data3.json'))
+--print(write_to_file({1,2,3,4,5},'data3.json'))
 return _API
