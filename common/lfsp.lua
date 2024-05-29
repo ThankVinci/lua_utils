@@ -14,6 +14,13 @@ local _API = { _VERSION = '1.0' }
 local function is_abspath(path)
     if(path:match('()/') == 1) then return true end
     if(path:match('()%a:/') == 1) then return true end
+    return false
+end
+
+local function is_rootpath(path)
+    if(path:match('()/$') == 1) then return true end
+    if(path:match('()%a:/$') == 1) then return true end
+    return false
 end
 
 local function path_parse(path)
@@ -46,13 +53,16 @@ end
 local function fix_path(path)
     path = path:gsub('\\','/')
     if(is_abspath(path)) then
-        if(path:sub(#path) == '/') then 
+        if(path:sub(#path) == '/' and not is_rootpath(path)) then 
             path = path:sub(1,#path-1)
         end
     else
         path = _API.pwd() .. '/' .. path
     end
-    return path_parse(path)
+    if(not is_rootpath(path)) then 
+        path = path_parse(path)
+    end
+    return path
 end
 
 local FILECLS = { path = '' }
@@ -84,6 +94,12 @@ end
 function FILECLS:get_directory()
     local parent_dir = self.path:match('.*/')
     return _API.new(parent_dir)
+end
+
+function FILECLS:get_root()
+    local root_dir = self.path:match('%a:/')
+    if(root_dir == nil) then root_dir = '/' end
+    return _API.new(root_dir)
 end
 
 function FILECLS:get_file_name(without_ext)
