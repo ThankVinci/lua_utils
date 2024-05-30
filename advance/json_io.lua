@@ -50,8 +50,7 @@ end
 
 _API.read_from_string = read_from_string
 _API.read_from_file = read_from_file
+_API.write_to_string = write_to_string
+_API.write_to_file = write_to_file
 
-local result,data = read_from_file('data2.json')
-print(data)
-print(write_to_file({1,2,3,4,5},'G:/data3.json'))
 return _API
