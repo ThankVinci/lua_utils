@@ -1,4 +1,9 @@
-package.path = '../common/?.lua;' .. package.path
+--[[
+使用须知：
+1. 本模块对外提供了四个接口，分别是read_from_string、read_from_file、write_to_string、write_to_file
+2. 本模块在实现上会依赖cjson和lfsp
+--]]
+
 local cjson = require 'cjson'
 local lfsp = require 'lfsp'
 
