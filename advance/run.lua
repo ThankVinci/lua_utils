@@ -1,3 +1,15 @@
+--[[
+使用须知：
+1.本模块为run.sh的升级版本，因为在Windows上运行run.sh还需要再配置一个bash.exe很麻烦，并且我也试过了在mingw的某个版本上，在bash.exe中执行有std::cout的程序会发生莫名其妙的段错误，所以就直接放弃在Windows上用bash了；
+2.本模块为单文件运行脚本，支持编译单个c、cpp、java文件并执行，支持运行lua、python脚本、支持执行cmakelists.txt文件（后续会补充一些其他类型的文件）；
+3.模块默认会认为在用户的系统中已经配好了环境变量，可以直接执行命令行，如果查不到运行环境，可以手动配置路径（config表中的dir属性就表示该exec所处的位置，请注意dir中当前$开头的环境变量还没有实现，dir当前只能用绝对路径）
+4.本模块的使用方法：lua.exe $path/run.lua $filepath
+要运行的文件路径是作为本模块的第一个参数，本模块会解析路径的文件名和后缀，根据后缀判断文件类型，然后根据在本模块中的命令行参数配置进行参数拼接；
+5.可以预见本脚本在未来肯定会变成一坨史；
+--]]
+
+-- 配置给notepad++的运行命令，%LUA_HOME%/share/lua/5.4/run.lua是本模块所在的目录，可以自行更改
+-- cmd /k lua.exe %LUA_HOME%/share/lua/5.4/run.lua "$(FULL_CURRENT_PATH)" & PAUSE & EXIT
 require 'efw_support'
 local lfsp = require 'lfsp'
 
