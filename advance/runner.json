@@ -11,6 +11,7 @@
     },
     "cxx":{
         "dir":"$MINGW_HOME/bin",
+        "dir":"",
         "exec":"g++",
         "params":[
             {"EN" :true,"val":" -o \"%s\""},
@@ -20,6 +21,7 @@
     },
     "cmake":{
         "dir":"$CMAKE_HOME/bin",
+        "dir":"",
         "exec":"cmake",
         "params":[
             {"EN" :true,"val":" \"%s\""},
@@ -28,6 +30,7 @@
     },
     "javac":{
         "dir":"$JAVA_HOME/bin",
+        "dir":"",
         "exec":"javac",
         "params":[
             {"EN" :true,"val":" \"%s\""},
@@ -36,6 +39,7 @@
     },
     "java":{
         "dir":"$JAVA_HOME/bin",
+        "dir":"",
         "exec":"java",
         "params":[
             {"EN" :true,"val":" \"%s\""}
@@ -43,6 +47,7 @@
     },
     "lua":{
         "dir":"$LUA_HOME/bin",
+        "dir":"",
         "exec":"lua",
         "params":[
             {"EN" :true,"val":" \"%s\""}
@@ -50,6 +55,7 @@
     },
     "python":{
         "dir":"$PYTHON_HOME",
+        "dir":"",
         "exec":"python",
         "params":[
             {"EN" :true,"val":" \"%s\""}

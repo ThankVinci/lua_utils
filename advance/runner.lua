@@ -70,7 +70,7 @@ local function cmd_params(tp,...)
     return cmd
 end
 
-local RUNNERCLS = {  }
+local RUNNERCLS = { valid = false }
 
 function RUNNERCLS:run(...)
     os.execute(self.exec .. cmd_params(self.params,...))
@@ -83,10 +83,11 @@ _API.new = function(name)
     local status,config = json_io.read_from_file('runner.json')
     if(status) then 
         status,exec = check_env(config[name].exec,config[name].dir)
-        print(status,exec)
     end
+    print(status)
     if(status) then 
         setmetatable(runner,{__index = RUNNERCLS})
+        runner.valid = true
         runner.exec = exec
         runner.params = config[name].params
     end
