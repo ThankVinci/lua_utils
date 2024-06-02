@@ -52,8 +52,8 @@ local function check_env(exec)
                 return true
             end
         end
-    return false
     end
+    return false
 end
 
 init_path() -- 初始化path
