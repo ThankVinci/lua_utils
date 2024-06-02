@@ -1,0 +1,58 @@
+{
+    "cc":{
+        "dir":"$MINGW_HOME/bin",
+        "dir":"",
+        "exec":"gcc",
+        "params":[
+            {"EN" :true,"val":" -o \"%s\""},
+            {"EN" :true,"val":" \"%s\""},
+            {"EN" :false,"val":" -lws2_32"}
+        ]
+    },
+    "cxx":{
+        "dir":"$MINGW_HOME/bin",
+        "exec":"g++",
+        "params":[
+            {"EN" :true,"val":" -o \"%s\""},
+            {"EN" :true,"val":" \"%s\""},
+            {"EN" :false,"val":" -lws2_32"}
+        ]
+    },
+    "cmake":{
+        "dir":"$CMAKE_HOME/bin",
+        "exec":"cmake",
+        "params":[
+            {"EN" :true,"val":" \"%s\""},
+            {"EN" :true,"val":" -G \"MinGW Makefiles\""}
+        ]
+    },
+    "javac":{
+        "dir":"$JAVA_HOME/bin",
+        "exec":"javac",
+        "params":[
+            {"EN" :true,"val":" \"%s\""},
+            {"EN" :true,"val":" -encoding utf8"}
+        ]
+    },
+    "java":{
+        "dir":"$JAVA_HOME/bin",
+        "exec":"java",
+        "params":[
+            {"EN" :true,"val":" \"%s\""}
+        ]
+    },
+    "lua":{
+        "dir":"$LUA_HOME/bin",
+        "exec":"lua",
+        "params":[
+            {"EN" :true,"val":" \"%s\""}
+        ]
+    },
+    "python":{
+        "dir":"$PYTHON_HOME",
+        "exec":"python",
+        "params":[
+            {"EN" :true,"val":" \"%s\""}
+        ]
+    }
+}
