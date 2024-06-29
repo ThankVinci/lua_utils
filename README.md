@@ -9,5 +9,6 @@
 ```shell
 efw_support		#efw的支持，全平台可导入，但仅在Windows下起作用，因此脚本可以直接导入该模块
 lfsp			#对lfs库进行封装以及提供了文件类型，全平台可用，主要依赖lfs库
+tblfmt			#对table进行格式化，输出成字符串
 ```
 
