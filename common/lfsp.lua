@@ -30,7 +30,7 @@ local function path_parse(path)
     local last_idx = 1
     for idx in path:gmatch("()/") do
         local part = path:sub(last_idx,idx-1)
-        if(part == '.' or part == '') then goto continue end
+        if(part == '.' or ( part == '' and idx > 1 )) then goto continue end
         if(part == '..') then
             table.remove(parts)
             goto continue
